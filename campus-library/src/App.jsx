@@ -2,8 +2,7 @@ import './App.css';
 import { Suspense } from 'react';
 import { FetchData } from './components/api/FetchData.jsx';
 
-const ApiData = FetchData("https://openlibrary.org/search.json?q=test");
-//const ApiData = FetchData("https://gutendex.com/books/?search=pride");
+
 function App() {
   const data = ApiData.read()?.docs;
   return (
