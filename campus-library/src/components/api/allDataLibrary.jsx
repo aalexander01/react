@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 
-export function useBooks(search) {
+//  "https://openlibrary.org/search.json?q=test"
+//  "https://gutendex.com/books/?search=pride"
+
+export function allDataLibrary(search) {
   const [allBooks, setAllBooks] = useState([]);
   const [visibleBooks, setVisibleBooks] = useState([]);
   const [loading, setLoading] = useState(true);

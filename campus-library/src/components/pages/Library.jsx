@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useBooks } from "../book/useBooks";
+import { allDataLibrary } from "../api/allDataLibrary";
 
 import { FiMenu } from "react-icons/fi";
 import { MdDarkMode } from "react-icons/md";
@@ -17,7 +17,7 @@ import "./library.css";
 export default function Library() {
   const [search, setSearch] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
-  const { visibleBooks, loading, error, loadMore } = useBooks(search);
+  const { visibleBooks, loading, error, loadMore } = allDataLibrary(search);
   const [darkMode, setDarkMode] = useState(false);
 
   const handleScroll = (e) => {

@@ -1,6 +1,6 @@
 import './App.css';
 import { Suspense } from 'react';
-import  Library  from './components/api/Library.jsx';
+import  Library  from './components/pages/Library.jsx';
 
 
 function App() {
