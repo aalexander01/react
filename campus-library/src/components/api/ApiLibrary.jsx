@@ -1,55 +1,60 @@
+import { useEffect, useRef, useState, useCallback } from "react";
 
-import { useEffect, useState } from 'react';
+const url = "https://gutendex.com/books/?search=pride";
 
-
-export function ApiLibrary(url){
+export function useApiLibrary() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [ controller, setController] = useState(null);
-  useEffect(() =>{
-    const abortController = new AbortController();
-    setController(abortController);
-    setLoading(true);
 
-    fetch(url, {signal: AbortController.signal})
-    .then((response) => response.json())
-    .then((data) => setData(data))
-    .catch(
-      
-      (error) => {
-        if(error.name =='AbortError'){
-          console.log("Request Cancelled")
+  const controllerRef = useRef(null);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    controllerRef.current = abortController;
+
+    setLoading(true);
+    setError(null);
+
+    fetch(url, {
+      signal: abortController.signal,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error fetching books");
         }
-        setError(error)})
-    .finally(() => setLoading(false));
-    return () => abortController.abort();
+
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+      })
+      .catch((error) => {
+        if (error.name === "AbortError") {
+          console.log("Request cancelled");
+          return;
+        }
+
+        setError(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
-  const libros = data?.docs;
-  const HandlerAborRequest = () =>{
-    if(controller){
-      controller.abort();
-      setError("Request Cancel");
-    }
-  }
-  return {libros, loading, error, HandlerAborRequest};
+  const handleAbortRequest = useCallback(() => {
+    controllerRef.current?.abort();
+  }, []);
+
+  return {
+    libros: data?.docs || [],
+    loading,
+    error,
+    handleAbortRequest,
+  };
 }
-
-export default ApiLibrary
-
-
-// const {libros, loading, error} = ApiLibrary("https://openlibrary.org/search.json?q=test");
-//   return (
-//     <>
-//     <h1>Libros</h1>
-//       <ul>
-//         {loading && <li>Cargando...</li>}
-//         {error && <li>{error}</li>}
-//         {libros?.map((libro, index) =>(
-          
-//           <li key={index}>{libro.author_name}</li>
-//         ))}
-//       </ul>
-//     </>
-//   )

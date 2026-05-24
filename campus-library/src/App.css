@@ -1,2 +1,167 @@
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0 20px;
+  border-bottom: 2px solid #000;
+  background: white;
+  position: relative;
+  z-index: 100;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.logo img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.search {
+  width: 280px;
+  padding: 8px 12px;
+  border: 2px solid #000;
+  border-radius: 20px;
+  outline: none;
+  text-align: center;
+}
+
+.menu {
+  font-size: 26px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  width: 240px;
+
+  background: white;
+  border: 2px solid #000;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 999;
+
+  overflow: hidden;
+
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownMenu button {
+  padding: 12px 15px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdownMenu button:hover {
+  background: #f2f2f2;
+  padding-left: 18px;
+}
+
+.dark {
+  background: #121212;
+  color: white;
+}
+
+/* HEADER DARK */
+.dark .header {
+  background: #1e1e1e;
+  border-color: white;
+}
+
+/* CARD DARK */
+.dark .card {
+  background: #1e1e1e;
+  border-color: white;
+}
+
+/* MENÚ DARK */
+.dark .dropdownMenu {
+  background: #1e1e1e;
+  border-color: white;
+}
+
+.dark .dropdownMenu button {
+  color: white;
+  border-bottom: 1px solid #333;
+}
+
+.dark .dropdownMenu button:hover {
+  background: #333;
+}
+
+.gridContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.card {
+  border: 2px solid #000;
+  border-radius: 15px;
+  padding: 10px;
+  text-align: center;
+  background: white;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background: #f3f3f3;
+}
 
 
