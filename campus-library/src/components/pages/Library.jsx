@@ -1,94 +1,99 @@
-import { useState } from "react";
+import { useEffect, useRef } from "react";
+
 import { allDataLibrary } from "../api/allDataLibrary";
 
-import { FiMenu } from "react-icons/fi";
-import { MdDarkMode } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
-import { FaFilter } from "react-icons/fa";
-import { MdFavorite } from "react-icons/md";
-import { BsClipboard2MinusFill } from "react-icons/bs";
-import { FaBookReader } from "react-icons/fa";
-import { FaHistory } from "react-icons/fa";
-import { IoSunnySharp } from "react-icons/io5";
-
-import logo from "../../assets/logo.ico";
 import "./library.css";
 
-export default function Library() {
-  const [search, setSearch] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const { visibleBooks, loading, error, loadMore } = allDataLibrary(search);
-  const [darkMode, setDarkMode] = useState(false);
+export default function Library(props) {
 
-  const handleScroll = (e) => {
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop <=
-      e.target.clientHeight + 50;
+  const {
+    visibleBooks,
+    loading,
+    error,
+    loadMore,
+    hasMore,
+  } = allDataLibrary(props.search);
 
-    if (bottom) {
-      loadMore();
+  // DIV FINAL
+  const loaderRef = useRef(null);
+
+  // OBSERVER
+  useEffect(() => {
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+
+        const target = entries[0];
+
+        if (target.isIntersecting && hasMore) {
+          loadMore();
+        }
+      },
+      {
+        threshold: 1,
+      }
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
     }
-  };
+
+    return () => observer.disconnect();
+
+  }, [loadMore, hasMore]);
 
   return (
-    <div className="app">
+    <>
+      {loading && <p className="msg">Cargando...</p>}
 
-      {/* HEADER */}
-      <header className="header">
-        <div className="logo">
-            <img src={logo} alt="logo" style={{ width: "32px", borderRadius: "50%", objectFit: "contain" }}/>
-            <span>CAMPUS LIBRARY</span>
-        </div>
+      {error && (
+        <p className="msg error">
+          {error}
+        </p>
+      )}
 
-        <input
-          className="search"
-          placeholder="Buscar libros..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <div className="grid">
 
-        <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
-            <FiMenu />
-        </div>
-        
-      </header>
-      {menuOpen && (
-          <div className="dropdownMenu">
-            <button onClick={() => setDarkMode(!darkMode)}>
-            {darkMode ? <IoSunnySharp /> : <MdDarkMode />}
-            </button>
-            <button><FaFilter /> Filtro</button>
-            <button><MdFavorite/> | Favoritos</button>
-            <button><BsClipboard2MinusFill /> Reservas</button>
-            <button><FaBookReader /> Lista de lectura</button>
-            <button><FaHistory /> Historial</button>
-          </div>
-        )}
+        {visibleBooks.map((book) => (
 
-      {/* GRID */}
-      <div className="gridContainer" onScroll={handleScroll}>
-        {loading && <p className="msg">Cargando...</p>}
-        {error && <p className="msg error">{error}</p>}
+          <div
+            className="card"
+            key={book.key}
+          >
 
-        <div className="grid">
-          {visibleBooks.map((book) => (
-            <div className="card" key={book.key}>
-              <img style={{objectFit: "contain"}}
-                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
-                  alt={book.title}
-                  onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/150";
-                  }}
-                />
+            <img
+              style={{ objectFit: "contain" }}
+              src={
+                book.cover_i
+                  ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
+                  : "https://via.placeholder.com/150"
+              }
+              alt={book.title}
+            />
 
-              <div className="info">
-                <p className="label">NOMBRE</p>
-                <p className="title">{book.title}</p>
-              </div>
+            <div className="info">
+              <p className="label">
+                NOMBRE
+              </p>
+
+              <p className="title">
+                {book.title}
+              </p>
             </div>
-          ))}
-        </div>
+
+          </div>
+        ))}
       </div>
-    </div>
+
+      {/* OBSERVER TARGET */}
+      {hasMore && (
+        <div
+          ref={loaderRef}
+          style={{
+            height: "20px",
+          }}
+        />
+      )}
+    </>
   );
 }

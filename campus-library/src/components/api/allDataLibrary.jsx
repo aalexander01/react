@@ -1,7 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+
 
 //  "https://openlibrary.org/search.json?q=test"
 //  "https://gutendex.com/books/?search=pride"
+
+import { useEffect, useState, useRef, useCallback } from "react";
 
 export function allDataLibrary(search) {
   const [allBooks, setAllBooks] = useState([]);
@@ -10,9 +12,9 @@ export function allDataLibrary(search) {
   const [error, setError] = useState(null);
 
   const controllerRef = useRef(null);
-  const limit = 40;
 
-  // cuando cambia searh o inicio
+  const LIMIT = 40;
+
   useEffect(() => {
     const controller = new AbortController();
     controllerRef.current = controller;
@@ -23,11 +25,15 @@ export function allDataLibrary(search) {
         setError(null);
 
         const res = await fetch(
-          `https://openlibrary.org/search.json?q=${search || 'test'}`,
-          { signal: controller.signal }
+          `https://openlibrary.org/search.json?q=${search || "test"}`,
+          {
+            signal: controller.signal,
+          }
         );
 
-        if (!res.ok) throw new Error("Error API");
+        if (!res.ok) {
+          throw new Error("Error al consultar API");
+        }
 
         const data = await res.json();
 
@@ -35,8 +41,8 @@ export function allDataLibrary(search) {
 
         setAllBooks(books);
 
-        // SOLO PRIMEROS 40
-        setVisibleBooks(books.slice(0, limit));
+        // SOLO 40 INICIALES
+        setVisibleBooks(books.slice(0, LIMIT));
       } catch (err) {
         if (err.name !== "AbortError") {
           setError(err.message);
@@ -51,18 +57,31 @@ export function allDataLibrary(search) {
     return () => controller.abort();
   }, [search]);
 
-  // CARGAR MÁS (WINDOWING)
-  const loadMore = () => {
+  // CARGAR MÁS
+  const loadMore = useCallback(() => {
     setVisibleBooks((prev) => {
-      const next = allBooks.slice(prev.length, prev.length + limit);
-      return [...prev, ...next];
+
+      // SI YA NO HAY MÁS
+      if (prev.length >= allBooks.length) {
+        return prev;
+      }
+
+      const nextBooks = allBooks.slice(
+        prev.length,
+        prev.length + LIMIT
+      );
+
+      return [...prev, ...nextBooks];
     });
-  };
+  }, [allBooks]);
+
+  const hasMore = visibleBooks.length < allBooks.length;
 
   return {
     visibleBooks,
     loading,
     error,
     loadMore,
+    hasMore,
   };
 }
