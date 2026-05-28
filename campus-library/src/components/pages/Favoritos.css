@@ -1,0 +1,178 @@
+.descriptionBook{
+  position: absolute;
+  top: 70px;
+  right: 10vh;
+
+  width: 70vh;
+  height: 85vh;
+
+  background: #ffffff;
+
+  border-radius: 24px 0 0 0;
+
+  padding: 2vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  box-shadow:
+    0 15px 35px rgba(0,0,0,0.15),
+    0 5px 15px rgba(0,0,0,0.08);
+
+  z-index: 999;
+
+
+  animation: fadeIn .3s ease;
+}
+
+/* HEADER */
+
+.bookHeader{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+
+  margin-bottom: 30px;
+}
+
+.bookImage{
+  width: 65vh;
+  height: 300px;
+
+  border-radius: 4%;
+  object-fit: cover;
+
+  margin-bottom: 18px;
+
+  border: 4px solid #f1f1f1;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.bookImage:hover{
+  transform: scale(1.05);
+}
+
+.bookHeader h2{
+  font-size: 30px;
+  color: #1f2937;
+
+  margin-bottom: 8px;
+
+  font-weight: 800;
+}
+
+.author{
+  color: #6b7280;
+  font-size: 16px;
+}
+
+/* INFO */
+
+.bookInfo{
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.infoRow span{
+  display: block;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #2563eb;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 10px;
+}
+
+.infoRow p{
+  color: #374151;
+
+  line-height: 1.7;
+
+  font-size: 15px;
+}
+
+/* BOTÓN */
+
+.reserveBtn{
+  margin-top: 30px;
+
+  width: 100%;
+  padding: 16px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.reserveBtn:hover{
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 20px rgba(37,99,235,.3);
+}
+
+/* SCROLL */
+
+.descriptionBook::-webkit-scrollbar{
+  width: 8px;
+}
+
+.descriptionBook::-webkit-scrollbar-thumb{
+  background: #d1d5db;
+  border-radius: 20px;
+}
+
+/* ANIMACIÓN */
+
+@keyframes fadeIn{
+  from{
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to{
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.bookContent{
+  flex: 1;
+  width: 70vh;
+  overflow-y: auto;
+
+  padding-right: 10px;
+
+  margin-bottom: 20px;
+}
+
+/* BOTÓN FIJO ABAJO */
+
+.reserveBtn{
+  flex-shrink: 0;
+}

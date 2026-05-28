@@ -1,6 +1,6 @@
 import './App.css';
 import { Suspense } from 'react';
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import  Library  from './components/pages/Library.jsx';
 import  Historial  from './components/pages/Historial.jsx';
 import Favoritos from './components/pages/Favoritos.jsx';
@@ -23,6 +23,7 @@ import ListLectura from './components/pages/ListLectura.jsx';
 function App() {
   const [search, setSearch] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
   const [darkMode, setDarkMode] = useState(false);
   const [section, setSection] = useState('home');
 
@@ -36,6 +37,19 @@ function App() {
     }
   };
 
+  useEffect(() => {
+      function handleClickOutside(event) {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+          setMenuOpen(false);
+        }
+      }
+  
+      document.addEventListener("mousedown", handleClickOutside);
+  
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, []);
   return <div className="app">
   
         {/* HEADER  */}
@@ -58,7 +72,7 @@ function App() {
           
         </header>
         {menuOpen && (
-            <div className="dropdownMenu">
+            <div ref={menuRef} className="dropdownMenu">
               <button onClick={() => setDarkMode(!darkMode)}>
               {darkMode ? <IoSunnySharp /> : <MdDarkMode />}
               </button>

@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { allDataLibrary } from "../api/allDataLibrary";
+import DetailBook from "../card/DetailBook";
 
 import "./library.css";
 
@@ -14,10 +15,12 @@ export default function Library(props) {
     hasMore,
   } = allDataLibrary(props.search);
 
-  // DIV FINAL
   const loaderRef = useRef(null);
 
+  const [selectedBook, setSelectedBook] = useState(null);
+
   // OBSERVER
+ console.log(visibleBooks);
   useEffect(() => {
 
     const observer = new IntersectionObserver(
@@ -44,7 +47,12 @@ export default function Library(props) {
 
   return (
     <>
-      {loading && <p className="msg">Cargando...</p>}
+
+      {loading && (
+        <p className="msg">
+          Cargando...
+        </p>
+      )}
 
       {error && (
         <p className="msg error">
@@ -59,19 +67,35 @@ export default function Library(props) {
           <div
             className="card"
             key={book.key}
+
+            onClick={() =>
+              setSelectedBook({
+                nombre: book.title,
+                autor: book.author_name?.[0] || "Desconocido",
+                edicion: book.first_publish_year || "N/A",
+                imagen: book.cover_i
+                ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
+                : "https://via.placeholder.com/150",
+                descripcion:
+                  "Sin descripción disponible."
+              })
+            }
           >
 
             <img
               style={{ objectFit: "contain" }}
+
               src={
                 book.cover_i
                   ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
                   : "https://via.placeholder.com/150"
               }
+
               alt={book.title}
             />
 
             <div className="info">
+
               <p className="label">
                 NOMBRE
               </p>
@@ -79,21 +103,36 @@ export default function Library(props) {
               <p className="title">
                 {book.title}
               </p>
+
             </div>
 
           </div>
         ))}
+
       </div>
 
-      {/* OBSERVER TARGET */}
+      {selectedBook && (
+
+        <DetailBook
+          nombre={selectedBook.nombre}
+          autor={selectedBook.autor}
+          edicion={selectedBook.edicion}
+          imagen = {selectedBook.imagen}
+          descripcion={selectedBook.descripcion}
+          onClose={() =>
+            setSelectedBook(null)
+          }
+        />
+
+      )}
+
       {hasMore && (
         <div
           ref={loaderRef}
-          style={{
-            height: "20px",
-          }}
+          style={{ height: "20px" }}
         />
       )}
+
     </>
   );
 }
