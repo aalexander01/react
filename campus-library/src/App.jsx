@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import  Library  from './components/pages/Library.jsx';
 import  Historial  from './components/pages/Historial.jsx';
 import Favoritos from './components/pages/Favoritos.jsx';
+import Foot from './Foot.jsx';
+
 import logo from "./assets/logo.ico";
 
 import { FiMenu } from "react-icons/fi";
@@ -92,8 +94,15 @@ function App() {
            {section === 'reservas' && <Reservas/>}
            {section === 'list_lectura' && <ListLectura/>}
            {section === 'historial' && <Historial/>}
+           <hr />
+          <div className="foot">
+            <Foot/>
+          </div>
           
+        
         </div>
+        {/* FOOT */}
+        
       </div>
   ;
 }
