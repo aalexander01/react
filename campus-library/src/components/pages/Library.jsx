@@ -1,53 +1,26 @@
-import { useEffect, useRef, useState } from "react";
-
-import { allDataLibrary } from "../api/allDataLibrary";
+import { useState } from "react";
+import { AllDataLibraryTwo } from "../api/allDataLibraryTwo.jsx";
 import DetailBook from "../card/DetailBook";
-
 import "./library.css";
 
 export default function Library(props) {
 
   const {
-    visibleBooks,
+    books,
     loading,
     error,
-    loadMore,
-    hasMore,
-  } = allDataLibrary(props.search);
-
-  const loaderRef = useRef(null);
+    currentPage,
+    totalPages,
+    nextPage,
+    prevPage,
+  } = AllDataLibraryTwo(props.search);
 
   const [selectedBook, setSelectedBook] = useState(null);
 
-  // OBSERVER
- console.log(visibleBooks);
-  useEffect(() => {
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-
-        const target = entries[0];
-
-        if (target.isIntersecting && hasMore) {
-          loadMore();
-        }
-      },
-      {
-        threshold: 1,
-      }
-    );
-
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
-
-    return () => observer.disconnect();
-
-  }, [loadMore, hasMore]);
+   const [texto, setTexto] = useState("");
 
   return (
     <>
-
       {loading && (
         <p className="msg">
           Cargando...
@@ -61,78 +34,87 @@ export default function Library(props) {
       )}
 
       <div className="grid">
-
-        {visibleBooks.map((book) => (
-
+        {books.map((book) => (
           <div
             className="card"
-            key={book.key}
-
+            key={book.id}
             onClick={() =>
               setSelectedBook({
                 nombre: book.title,
-                autor: book.author_name?.[0] || "Desconocido",
-                edicion: book.first_publish_year || "N/A",
-                imagen: book.cover_i
-                ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
-                : "https://via.placeholder.com/150",
+                autor:
+                  book.authors?.[0]?.name ||
+                  "Desconocido",
+                edicion:
+                  "N/A",
+                imagen:
+                  book.formats?.["image/jpeg"] ||
+                  "https://via.placeholder.com/150",
                 descripcion:
-                  "Sin descripción disponible."
+                   book.summaries || "Sin descripción disponible.",
               })
             }
           >
-
             <img
               style={{ objectFit: "contain" }}
-
               src={
-                book.cover_i
-                  ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
-                  : "https://via.placeholder.com/150"
+                book.formats?.["image/jpeg"] ||
+                "https://via.placeholder.com/150"
               }
-
               alt={book.title}
             />
 
             <div className="info">
-
               <p className="label">
                 NOMBRE
               </p>
 
-              <p className="title">
-                {book.title}
+              <p className="title" >
+                {book.title?.length >= 50
+                  ? book.title.slice(0, 50) + "..."
+                  : book.title
+                }
               </p>
-
             </div>
-
           </div>
         ))}
-
-      </div>
-
-      {selectedBook && (
-
-        <DetailBook
+        {selectedBook && (
+        <div className="contentDetail">
+          <DetailBook
           nombre={selectedBook.nombre}
           autor={selectedBook.autor}
           edicion={selectedBook.edicion}
-          imagen = {selectedBook.imagen}
+          imagen={selectedBook.imagen}
           descripcion={selectedBook.descripcion}
           onClose={() =>
             setSelectedBook(null)
           }
-        />
-
+          />
+        </div>
       )}
+      </div>
 
-      {hasMore && (
-        <div
-          ref={loaderRef}
-          style={{ height: "20px" }}
-        />
-      )}
+      {/* PAGINACIÓN */}
+      <div className="pagination">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+        >
+          ← Anterior
+        </button>
 
+        <span>
+          Página {currentPage} de {totalPages}
+        </span>
+
+        <button
+          onClick={nextPage}
+          disabled={currentPage === totalPages}
+        >
+          Siguiente →
+        </button>
+      </div>
+
+      
     </>
   );
 }

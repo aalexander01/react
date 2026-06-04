@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import logo from "../../assets/logo.png";
-import "./DetailBook.css";
-import ReservationForm from "./ReservationForm.jsx"
+import { useEffect, useRef } from "react";
+import "./Filtros.css";
 
-export default function DetailBook(props) {
+export default function Filtros() {
 
   const menuRef = useRef(null);
-  const [openReserve, setOpenReserve] = useState(false);
 
   useEffect(() => {
 
@@ -78,19 +75,9 @@ export default function DetailBook(props) {
 
         </div>
 
-        <button
-          className="reserveBtn"
-          onClick={() => setOpenReserve(true)}
-        >
+        <button className="reserveBtn">
           RESERVAR
         </button>
-
-      {openReserve && (
-        <ReservationForm
-          nombreLibro={props.nombre}
-          onClose={() => setOpenReserve(false)}
-        />
-      )}
 
       </div>
 

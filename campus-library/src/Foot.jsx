@@ -14,7 +14,7 @@ function Item({ icon, text }) {
   );
 }
 
-export default function Contact(props) {
+export default function Foot(props) {
   return (
     <div className="container">
 

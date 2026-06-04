@@ -1,51 +1,61 @@
-import {
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-} from "react";
+import { useEffect, useState, useCallback } from "react";
 
-const LIMIT = 40;
+const booksCache = new Map();
 
 export function AllDataLibraryTwo(search) {
-  const [allBooks, setAllBooks] = useState([]);
-
-  const [visibleCount, setVisibleCount] =
-    useState(LIMIT);
-
+  const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    async function fetchBooks() {
+    const fetchBooks = async () => {
+      const normalizedSearch = search.trim().toLowerCase();
+      const cacheKey = `${normalizedSearch}-${currentPage}`;
+
       try {
         setLoading(true);
         setError(null);
 
-        const query = encodeURIComponent(search);
+        const cached = booksCache.get(cacheKey);
 
-        const url = search
-          ? `https://gutendex.com/books/?search=${query}`
-          : `https://gutendex.com/books/`;
+        if (cached) {
+          setBooks(cached);
+          setLoading(false);
+          return;
+        }
 
-        const res = await fetch(url, {
+        const url = normalizedSearch
+          ? `https://gutendex.com/books?search=${encodeURIComponent(
+              normalizedSearch
+            )}&page=${currentPage}`
+          : `https://gutendex.com/books/?page=${currentPage}`;
+
+        const response = await fetch(url, {
           signal: controller.signal,
         });
 
-        if (!res.ok) {
-          throw new Error("Error al consultar API");
+        if (!response.ok) {
+          throw new Error("Error obteniendo libros");
         }
 
-        const data = await res.json();
+        const data = await response.json();
+        const results = data.results || [];
 
-        setAllBooks(data.results || []);
+        booksCache.set(cacheKey, results);
 
-        // RESETEA PAGINACIÓN
-        setVisibleCount(LIMIT);
+        setBooks(results);
 
+        let pages = 1;
+        if (data.count) {
+          pages = Math.ceil(data.count / 32);
+        }
+
+        setTotalPages(pages);
       } catch (err) {
         if (err.name !== "AbortError") {
           setError(err.message);
@@ -53,32 +63,33 @@ export function AllDataLibraryTwo(search) {
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchBooks();
 
     return () => controller.abort();
+  }, [search, currentPage]);
 
-  }, [search]);
+  const nextPage = useCallback(() => {
+    setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+  }, [totalPages]);
 
-  // MEMOIZA LIBROS VISIBLES
-  const visibleBooks = useMemo(() => {
-    return allBooks.slice(0, visibleCount);
-  }, [allBooks, visibleCount]);
-
-  // MEMOIZA BOTÓN
-  const loadMore = useCallback(() => {
-    setVisibleCount((prev) => prev + LIMIT);
+  const prevPage = useCallback(() => {
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
   }, []);
 
-  const hasMore =
-    visibleCount < allBooks.length;
+  const resetPage = useCallback(() => {
+    setCurrentPage(1);
+  }, []);
 
   return {
-    books: visibleBooks,
+    books,
     loading,
     error,
-    loadMore,
-    hasMore,
+    currentPage,
+    totalPages,
+    nextPage,
+    prevPage,
+    resetPage,
   };
 }

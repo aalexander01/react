@@ -1,7 +1,7 @@
 import './App.css';
 import { Suspense } from 'react';
 import { useState, useEffect, useRef } from "react";
-import  Library  from './components/pages/Library.jsx';
+import  LibraryThree  from './components/pages/LibraryThree.jsx';
 import  Historial  from './components/pages/Historial.jsx';
 import Favoritos from './components/pages/Favoritos.jsx';
 import Foot from './Foot.jsx';
@@ -124,7 +124,7 @@ function App() {
   
         {/* GRID */}
         <div className="gridContainer" onScroll={handleScroll}>
-           {section === 'home' && <Library search = {search}/>}
+           {section === 'home' && <LibraryThree search = {search}/>}
            {section === 'favoritos' && <Favoritos/>}
            {section === 'reservas' && <Reservas/>}
            {section === 'list_lectura' && <ListLectura/>}
