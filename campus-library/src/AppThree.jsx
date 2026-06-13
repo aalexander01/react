@@ -58,7 +58,7 @@ function App() {
       };
     }, []);
   return <>
-    <div className="app">
+    <div className={darkMode ? "app dark" : "app"}>
   
         {/* HEADER  */}
         <header className="header">
@@ -109,7 +109,7 @@ function App() {
         {menuOpen && (
             <div ref={menuRef} className="menuPanel">
               <button onClick={() => setDarkMode(!darkMode)}>
-              {darkMode ? <IoSunnySharp /> : <MdDarkMode />}
+              {darkMode ? <MdDarkMode /> : <IoSunnySharp />}
               </button>
               <button onClick={() => setFiltros(!filtros)}><FaFilter /> Filtro</button>
                 {

@@ -100,3 +100,58 @@
   background: yellow;
   color: white;
 }
+
+/* DARK MODEL DE DETAILMODEL */
+
+
+/* ========================= */
+/* DESCRIPTION BOOK - DARK */
+/* ========================= */
+
+.dark .descriptionBook {
+  background: #1e1e1e;
+  color: white;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.dark .bookContent {
+  background: #1e1e1e;
+}
+
+.dark .bookHeader {
+  color: white;
+}
+
+.dark .author {
+  color: #b0b0b0;
+}
+
+.dark .bookInfo {
+  color: white;
+}
+
+.dark .infoRow span {
+  color: #ffffff;
+}
+
+.dark .reserveBtn {
+  background: #2563eb;
+  color: white;
+}
+
+.dark .reserveBtn:hover {
+  background: #1d4ed8;
+}
+
+.dark .overlay {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.dark .icon-container {
+  color: #c0c0c0;
+}
+
+.dark .icon-container.active {
+  background: #facc15;
+  color: #111827;
+}
