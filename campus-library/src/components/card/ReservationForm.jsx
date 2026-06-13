@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { saveReserve } from "../localStorage/LSReserve.jsx";
+import { saveReserve } from "../../localStorage/LSReserve.jsx";
 import "./ReservationForm.css";
 
 export default function ReservationForm(props) {
@@ -16,13 +16,13 @@ export default function ReservationForm(props) {
     setFechaInicio(fechaActual);
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Reservando libro:", props.nombreLibro);
-    console.log("Fecha inicio:", fechaInicio);
-    console.log("Fecha entrega:", fechaEntrega);
-    // Aquí puedes agregar la lógica para enviar los datos a tu backend
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Reservando libro:", props.nombreLibro);
+  //   console.log("Fecha inicio:", fechaInicio);
+  //   console.log("Fecha entrega:", fechaEntrega);
+  //   // Aquí puedes agregar la lógica para enviar los datos a tu backend
+  // };
   return (
     <div className="reservationOverlay">
       <div className="reservationModal">

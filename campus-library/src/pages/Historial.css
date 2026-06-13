@@ -1,0 +1,82 @@
+.historyContainer {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #111827;
+}
+
+.historyContainer h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #000000;
+}
+
+.historyContainer p {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.historyTable {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.historyTable thead {
+  background: #2563eb;
+  color: white;
+}
+
+.historyTable th, .historyTable td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.historyTable tbody tr:hover {
+  background-color: #f3f4f6;
+  transition: background 0.2s;
+}
+
+.historyTable tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+/* BOTON DE ORDEN */
+.tableContainer {
+  width: 100%;
+}
+
+.tableActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.sortButton {
+  background: #0b5bd2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgb(5, 126, 160);
+}
+
+.sortButton:hover {
+  background: #087d91;
+  transform: translateY(-2px);
+}
+
+.sortButton:active {
+  transform: translateY(0);
+}
+
+.sortButton:focus {
+  outline: none;
+}

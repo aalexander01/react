@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import logo from "../../assets/logo.png";
 import "./DetailBook.css";
 import ReservationForm from "./ReservationForm.jsx"
+import {SaveFavorite} from "../../localStorage/LSFavoritos.jsx"
+import { CiStar } from "react-icons/ci";
 
 export default function DetailBook(props) {
 
   const menuRef = useRef(null);
   const [openReserve, setOpenReserve] = useState(false);
-
+  const [selected, setSelected] = useState(false);
+  const selectedBook = props.selectedBook;
   useEffect(() => {
 
     function handleClickOutside(event) {
@@ -46,18 +49,17 @@ export default function DetailBook(props) {
         <div className="bookContent">
 
           <div className="bookHeader">
-
             <img
               style={{ objectFit: "contain" }}
-              src={props.imagen}
-              alt={props.nombre}
+              src={selectedBook.imagen}
+              alt={selectedBook.nombre}
               className="bookImage"
             />
 
-            <h2>{props.nombre}</h2>
+            <h2>{selectedBook.nombre}</h2>
 
             <p className="author">
-              {props.autor}
+              {selectedBook.autor}
             </p>
 
           </div>
@@ -66,18 +68,28 @@ export default function DetailBook(props) {
 
             <div className="infoRow">
               <span>AÑO DE EDICIÓN</span>
-              <p>{props.edicion}</p>
+              <p>{selectedBook.edicion}</p>
             </div>
 
             <div className="infoRow">
               <span>DESCRIPCIÓN</span>
-              <p>{props.descripcion}</p>
+              <p>{selectedBook.descripcion}</p>
             </div>
 
           </div>
 
         </div>
 
+        <span>
+          <CiStar 
+            className={selected ? "icon-container active" : "icon-container"}
+            onClick={() => {
+              setSelected(!selected);
+                console.log("se selecciono"+ selectedBook.nombre);
+                SaveFavorite(selectedBook);
+            }}
+          />
+        </span>
         <button
           className="reserveBtn"
           onClick={() => setOpenReserve(true)}
@@ -85,12 +97,12 @@ export default function DetailBook(props) {
           RESERVAR
         </button>
 
-      {openReserve && (
-        <ReservationForm
-          nombreLibro={props.nombre}
-          onClose={() => setOpenReserve(false)}
-        />
-      )}
+        {openReserve && (
+          <ReservationForm
+            nombreLibro={selectedBook.nombre}
+            onClose={() => setOpenReserve(false)}
+          />
+        )}
 
       </div>
 

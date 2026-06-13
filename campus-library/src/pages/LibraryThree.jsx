@@ -1,19 +1,25 @@
 import { useState } from "react";
 import { AllDataLibraryThree } from "../api/AllDataLibraryThree.jsx";
-import DetailBook from "../card/DetailBook";
+import { AllDataLibrary, getLibraryByTypeSearch } from "../api/AllDataLibrary.jsx";
+import DetailBook from "../components/card/DetailBook.jsx";
 import "./library.css";
 
-export default function LibraryThree(props) {
+export default function LibraryThree() {
+
+  const [page, setPage] = useState(1);
+
+  function subirArriba() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+  }
 
   const {
     books,
     loading,
-    error,
-    currentPage,
-    totalPages,
-    nextPage,
-    prevPage,
-  } = AllDataLibraryThree(props.search);
+  } = AllDataLibrary(page);
+
 
   const [selectedBook, setSelectedBook] = useState(null);
 
@@ -23,16 +29,12 @@ export default function LibraryThree(props) {
         <p className="msg">Cargando...</p>
       )}
 
-      {error && (
-        <p className="msg error">{error}</p>
-      )}
-
       <div className="grid">
         {(books || []).map((book, index) => {
 
           // Normalización para OpenLibrary y Gutendex
           const title = book.title || "Sin título";
-
+          
           const author =
             book.authors_name?.[0]?.name ||
             book.authors_name?.[0]?.author_name?.name ||
@@ -42,7 +44,7 @@ export default function LibraryThree(props) {
             book.formats?.["image/jpeg"] ||
             book.cover_i
               ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-              : "https://via.placeholder.com/150";
+              : `https://via.placeholder.com/150`;
 
           const description =
             book.description ||
@@ -87,11 +89,7 @@ export default function LibraryThree(props) {
       {selectedBook && (
         <div className="contentDetail">
           <DetailBook
-            nombre={selectedBook.nombre}
-            autor={selectedBook.autor}
-            edicion={selectedBook.edicion}
-            imagen={selectedBook.imagen}
-            descripcion={selectedBook.descripcion}
+            selectedBook={selectedBook}
             onClose={() => setSelectedBook(null)}
           />
         </div>
@@ -100,19 +98,18 @@ export default function LibraryThree(props) {
       {/* PAGINACIÓN */}
       <div className="pagination">
         <button
-          onClick={prevPage}
-          disabled={currentPage === 1}
+          onClick={() => { setPage((prev) => Math.max(prev - 1, 1)); subirArriba(); }}
+          disabled={page === 1}
         >
           ← Anterior
         </button>
 
         <span>
-          Página {currentPage} de {totalPages}
+          Página {page}
         </span>
 
         <button
-          onClick={nextPage}
-          disabled={currentPage === totalPages}
+          onClick={() => {setPage((prev) => prev + 1); subirArriba();}}
         >
           Siguiente →
         </button>

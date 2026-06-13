@@ -1,18 +1,15 @@
+import { getReserve } from "../localStorage/LSReserve.jsx";
+import "./Reservas.css";
 
+export default function Reservas() {
+  const reservas = getReserve();
 
-export default function Historial(props) {
-  
- 
-  const reservas = getHistory();
   return (
+    <div className="reservasContainer">
+      <h1>Mis Reservas</h1>
 
-  
-      <>
-        
-        <div className="reservasContainer">
-        <h1>Historial</h1>
       {reservas.length === 0 ? (
-        <p>Historial de navegacion vacio.</p>
+        <p>No tienes reservas aún.</p>
       ) : (
         <table className="reservasTable">
           <thead>
@@ -36,6 +33,5 @@ export default function Historial(props) {
         </table>
       )}
     </div>
-      </>
   );
 }

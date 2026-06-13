@@ -456,3 +456,73 @@
 }
 
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  width: fit-content;
+  margin: 30px auto;
+  padding: 12px 20px;
+
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pagination span {
+  font-weight: 600;
+  color: #444;
+}
+
+.pagination button {
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  color: #333;
+
+  padding: 10px 16px;
+  border-radius: 10px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+select {
+  width: 200px;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+
+  /* quita estilo nativo en algunos navegadores */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* flecha personalizada */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='gray'%3E%3Cpath d='M4 6l4 4 4-4H4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+}
+
+select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}

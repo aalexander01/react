@@ -1,10 +1,11 @@
 import './App.css';
 import { Suspense } from 'react';
 import { useState, useEffect, useRef } from "react";
-import  LibraryThree  from './components/pages/LibraryThree.jsx';
-import  Historial  from './components/pages/Historial.jsx';
-import Favoritos from './components/pages/Favoritos.jsx';
-import Foot from './Foot.jsx';
+import  LibraryThree  from "./pages/LibraryThree.jsx";
+import  LibrarySearch  from "./pages/LibrarySearch.jsx";
+import  Historial  from "./pages/Historial.jsx";
+import Favoritos from "./pages/Favoritos.jsx";
+import Foot from "./Foot.jsx";
 import logo from "./assets/logo.ico";
 import { FiMenu } from "react-icons/fi";
 import { MdDarkMode } from "react-icons/md";
@@ -17,9 +18,9 @@ import { FaHistory } from "react-icons/fa";
 import { IoSunnySharp } from "react-icons/io5";
 import { IoHome } from "react-icons/io5";
 import { IoSearch } from "react-icons/io5";
-import Reservas from './components/pages/Reservas.jsx';
-import ListLectura from './components/pages/ListLectura.jsx';
-
+import Reservas from "./pages/Reservas.jsx";
+import ListLectura from "./pages/ListLectura.jsx";
+import { saveHistory } from "./localStorage/LSHistory.jsx";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -31,6 +32,7 @@ function App() {
   const [fromYear, setFromYear] = useState("");
   const [toYear, setToYear] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [typesSearch, setTypesSearch] = useState("title");
 
   const handleScroll = (e) => {
     const bottom =
@@ -65,22 +67,39 @@ function App() {
               <span onClick={() => setSection('home')} >CAMPUS LIBRARY</span>
           </div>
   
+          <div>
+            <select
+              name="filtro" 
+              id="filtro"
+              onChange={(e) => setTypesSearch(e.target.value)} 
+            >
+              <option  value="title">titulo de libro</option>
+              <option value="author">autor de libro</option>
+              <option value="isbn">id de libro</option>
+            </select>
+          </div>
           <div className="search-container">
-  <input
-    type="text"
-    className="search"
-    placeholder="Buscar libros..."
-    value={inputValue}
-    onChange={(e) => setInputValue(e.target.value)}
-  />
+            <input
+              type="text"
+              className="search"
+              placeholder="Buscar libros..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
 
-  <button
-    className="search-btn"
-    onClick={() => setSearch(inputValue)}
-  >
-    <IoSearch />
-  </button>
-</div>
+            <button
+              className="search-btn"
+              onClick={() => {
+                setSearch(inputValue);
+                saveHistory({
+                  nombre: inputValue
+                });
+                setSection('librarySearch');
+              }}
+            >
+              <IoSearch />
+            </button>
+          </div>
   
           <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
               <FiMenu />
@@ -124,7 +143,8 @@ function App() {
   
         {/* GRID */}
         <div className="gridContainer" onScroll={handleScroll}>
-           {section === 'home' && <LibraryThree search = {search}/>}
+           {section === 'home' && <LibraryThree />}
+           {section === 'librarySearch' && <LibrarySearch typess = {typesSearch}  searchp = {search}/>}
            {section === 'favoritos' && <Favoritos/>}
            {section === 'reservas' && <Reservas/>}
            {section === 'list_lectura' && <ListLectura/>}
