@@ -24,7 +24,14 @@ export default function Reservas() {
             {reservas.map((reserva, index) => (
               <tr key={index}>
                 <td>{reserva.nombreLibro}</td>
-                <td>{reserva.estado}</td>
+                <td onChange={() =>{
+                   
+                    if(reserva.estado.toLowerCase === "aprobado"){
+                      
+                    }
+                  }}
+                >{reserva.estado}</td>
+                
                 <td>{reserva.fechaInicio}</td>
                 <td>{reserva.fechaEntrega}</td>
               </tr>

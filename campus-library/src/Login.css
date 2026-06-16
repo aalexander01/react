@@ -1,0 +1,196 @@
+.loginContainer {
+  min-height: 80vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 420px;
+
+  background: white;
+
+  padding: 2rem;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15);
+
+  animation: fadeIn 0.3s ease;
+}
+
+.loginCard h1 {
+  margin: 0;
+  text-align: center;
+  color: #111827;
+}
+
+.loginCard p {
+  text-align: center;
+  color: #6b7280;
+  margin: 10px 0 30px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.inputGroup input {
+  padding: 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+
+  font-size: 15px;
+
+  transition: 0.2s ease;
+}
+
+.inputGroup input:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.loginButton {
+  margin-top: 10px;
+
+  border: none;
+  border-radius: 12px;
+
+  padding: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.loginButton:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 20px rgba(37, 99, 235, 0.25);
+}
+
+.loginFooter {
+  margin-top: 20px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.loginFooter a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.loginFooter a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputWrapper input {
+  width: 100%;
+  padding: 14px 45px 14px 45px;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 15px;
+  color: #9ca3af;
+  font-size: 15px;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 12px;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+
+  color: #9ca3af;
+  font-size: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eyeButton:hover {
+  color: #2563eb;
+}
+
+.loginFooter {
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.registerLink {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.registerLink:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}

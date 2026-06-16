@@ -166,3 +166,84 @@
   background: #ef4444;
   color: white;
 }
+
+
+/* ========================= */
+/* DARK MODE RESERVATION */
+/* ========================= */
+
+.dark .reservationOverlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.dark .reservationModal {
+  background: #1e1e1e;
+  color: white;
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dark .modalHeader h2 {
+  color: #ffffff;
+}
+
+.dark .modalHeader p {
+  color: #b0b0b0;
+}
+
+.dark .bookBox {
+  background: #2a2a2a;
+  border-left: 5px solid #3b82f6;
+}
+
+.dark .bookBox span {
+  color: #b0b0b0;
+}
+
+.dark .bookBox h3 {
+  color: #ffffff;
+}
+
+.dark .inputGroup label {
+  color: #e5e7eb;
+}
+
+.dark .inputGroup input {
+  background: #2a2a2a;
+  color: white;
+  border: 1px solid #444;
+}
+
+.dark .inputGroup input::placeholder {
+  color: #9ca3af;
+}
+
+.dark .inputGroup input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.dark .reserveButton {
+  background: linear-gradient(
+    135deg,
+    #3b82f6,
+    #2563eb
+  );
+}
+
+.dark .reserveButton:hover {
+  box-shadow:
+    0 10px 20px rgba(59, 130, 246, 0.35);
+}
+
+.dark .closeBtn {
+  background: #2a2a2a;
+  color: white;
+}
+
+.dark .closeBtn:hover {
+  background: #ef4444;
+  color: white;
+}

@@ -4,10 +4,10 @@ import { AllDataLibrary, getLibraryByTypeSearch } from "../api/AllDataLibrary.js
 import DetailBook from "../components/card/DetailBook.jsx";
 import "./library.css";
 
-export default function LibraryThree() {
+export default function LibraryThree(props) {
 
   const [page, setPage] = useState(1);
-
+ const [order, setOrder] = useState("asc");
   function subirArriba() {
   window.scrollTo({
     top: 0,
@@ -15,19 +15,25 @@ export default function LibraryThree() {
   });
   }
 
-  const {
-    books,
-    loading,
-  } = AllDataLibrary(page);
+  const books = AllDataLibrary(page).books.filter((libro) => {
+    const anio = libro.first_publish_year;
+
+    return anio >= props.fromYear && anio <= props.toYear;
+  })
+  .sort((a, b) => {
+    return order === "asc"
+      ? a.first_publish_year - b.first_publish_year
+      : b.first_publish_year - a.first_publish_year;
+  });
 
 
   const [selectedBook, setSelectedBook] = useState(null);
 
   return (
     <>
-      {loading && (
+      {/* {loading && (
         <p className="msg">Cargando...</p>
-      )}
+      )} */}
 
       <div className="grid">
         {(books || []).map((book, index) => {

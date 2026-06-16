@@ -39,3 +39,45 @@ export function getReserve(){
   return reserve;
 
 } 
+
+export function updateReserve(solicitud = {}) {
+
+    const nombre = solicitud.nombre || "";
+    const estado = solicitud.estado || "";
+
+    const reservas = getReserve();
+
+    let response = false;
+
+    reservas.forEach(reserva => {
+
+        if (reserva.nombreLibro === nombre) {
+
+            reserva.estado = estado;
+            response = true;
+        }
+    });
+
+    localStorage.setItem(
+        "reservas",
+        JSON.stringify(reservas)
+    );
+
+    return response;
+}
+
+function validationUser(usuario, password) {
+  const reservas = getReserve();
+
+  const userFound = users.find(
+    user =>
+      user.user === usuario &&
+      user.password === password
+  );
+
+  if (!userFound) {
+    return null;
+  }
+
+  return userFound.rol;
+}

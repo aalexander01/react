@@ -3,7 +3,7 @@
   margin: 2rem auto;
   padding: 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #111827;
+  color: #98aad0;
 }
 
 .reservasContainer h1 {
@@ -36,10 +36,10 @@
 }
 
 .reservasTable tbody tr:hover {
-  background-color: #f3f4f6;
+  /* background-color: #f3f4f6; */
   transition: background 0.2s;
 }
 
 .reservasTable tbody tr:nth-child(even) {
-  background-color: #f9fafb;
+  /* background-color: #f9fafb; */
 }

@@ -1,6 +1,7 @@
 import './App.css';
 import { Suspense } from 'react';
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import  LibraryThree  from "./pages/LibraryThree.jsx";
 import  LibrarySearch  from "./pages/LibrarySearch.jsx";
 import  Historial  from "./pages/Historial.jsx";
@@ -18,6 +19,7 @@ import { FaHistory } from "react-icons/fa";
 import { IoSunnySharp } from "react-icons/io5";
 import { IoHome } from "react-icons/io5";
 import { IoSearch } from "react-icons/io5";
+import { FaPowerOff } from "react-icons/fa";
 import Reservas from "./pages/Reservas.jsx";
 import ListLectura from "./pages/ListLectura.jsx";
 import { saveHistory } from "./localStorage/LSHistory.jsx";
@@ -29,10 +31,11 @@ function App() {
   const menuRef = useRef(null);
   const [darkMode, setDarkMode] = useState(false);
   const [section, setSection] = useState('home');
-  const [fromYear, setFromYear] = useState("");
-  const [toYear, setToYear] = useState("");
+  const [fromYear, setFromYear] = useState(1700);
+  const [toYear, setToYear] = useState(new Date().getFullYear());
   const [inputValue, setInputValue] = useState("");
   const [typesSearch, setTypesSearch] = useState("title");
+  const navigate = useNavigate();
 
   const handleScroll = (e) => {
     const bottom =
@@ -120,10 +123,11 @@ function App() {
                       <li>
                         <span>Año</span>
                         <input type="number" min={"1700"} max={"2026"}  placeholder='Año'
-                          defaultValue={1700}
+                          value={fromYear}
                           onChange={(e) => setFromYear(e.target.value)}
                         />
-                        <input type="number" min={fromYear} max={"2026"} defaultValue={fromYear}  placeholder='Año'
+                        <input type="number" min={fromYear} max="2026" value={toYear}  placeholder='Año'
+                          onChange={(e) => setToYear(Number(e.target.value))}
                         />
                       </li>
                       <li><button>Aplicar litro <FaFilter /></button></li>
@@ -134,16 +138,17 @@ function App() {
                 }
               
               <button onClick={() => setSection('favoritos')}><MdFavorite/> | Favoritos</button>
-              <button onClick={() => setSection('reservas')}><BsClipboard2MinusFill /> Reservas</button>
+              {/* <button onClick={() => setSection('reservas')}><BsClipboard2MinusFill /> Reservas</button> */}
               <button onClick={() => setSection('list_lectura')}><FaBookReader /> Lista de lectura</button>
               <button onClick={() => setSection('historial')}><FaHistory /> Historial</button>
               <button onClick={() => setSection('home')}><IoHome/> Home</button>
+              <button onClick={() => navigate("/")}><FaPowerOff/> Cerrar Sesion</button>
             </div>
           )}
   
         {/* GRID */}
         <div className="gridContainer" onScroll={handleScroll}>
-           {section === 'home' && <LibraryThree />}
+           {section === 'home' && <LibraryThree fromYear = {fromYear} toYear = {toYear} />}
            {section === 'librarySearch' && <LibrarySearch typess = {typesSearch}  searchp = {search}/>}
            {section === 'favoritos' && <Favoritos/>}
            {section === 'reservas' && <Reservas/>}

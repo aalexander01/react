@@ -1,0 +1,265 @@
+.titleRegister{
+  margin-right: 20px;
+}
+
+.registerContainer {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+}
+
+.registerCard {
+  width: 100%;
+  max-width: 450px;
+
+  background: white;
+
+  padding: 2rem;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.15);
+
+  animation: fadeIn .3s ease;
+}
+
+.registerCard h1 {
+  text-align: center;
+  margin: 0;
+  color: #111827;
+}
+
+.registerCard p {
+  text-align: center;
+  margin: 10px 0 30px;
+  color: #6b7280;
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputWrapper input {
+  width: 100%;
+
+  padding: 14px 45px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+
+  font-size: 15px;
+
+  transition: .2s;
+}
+
+.inputWrapper input:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,.15);
+}
+
+.inputIcon {
+  position: absolute;
+
+  left: 15px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #9ca3af;
+}
+
+.eyeButton {
+  position: absolute;
+
+  right: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+
+  color: #9ca3af;
+
+  display: flex;
+  align-items: center;
+}
+
+.eyeButton:hover {
+  color: #2563eb;
+}
+
+.registerButton {
+  border: none;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: .25s;
+}
+
+.registerButton:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 20px rgba(37,99,235,.25);
+}
+
+.registerFooter {
+  margin-top: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #6b7280;
+}
+
+.loginLink {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.loginLink:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inputGroup label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+  text-align: left;
+  width: 100%;
+}
+
+.inputWrapper input {
+  box-sizing: border-box;
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .registerCard {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .registerCard h1 {
+    font-size: 1.8rem;
+  }
+
+  .titleRegister {
+    font-size: 1.8rem;
+  }
+
+  .inputWrapper input {
+    font-size: 14px;
+    padding: 12px 40px;
+  }
+
+  .registerButton {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+  .registerContainer {
+    padding: 10px;
+  }
+
+  .registerCard {
+    max-width: 100%;
+    padding: 1.2rem;
+    border-radius: 15px;
+  }
+
+  .registerCard h1 {
+    font-size: 1.5rem;
+  }
+
+  .titleRegister {
+    font-size: 1.5rem;
+  }
+
+  .registerCard p {
+    font-size: 14px;
+  }
+
+  .inputGroup label {
+    font-size: 14px;
+    text-align: left;
+  }
+
+  .inputWrapper input {
+    padding: 12px 38px;
+    font-size: 14px;
+  }
+
+  .registerButton {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .registerFooter {
+    font-size: 13px;
+  }
+}
