@@ -5,12 +5,31 @@ import ReservationForm from "./ReservationForm.jsx"
 import {SaveFavorite} from "../../localStorage/LSFavoritos.jsx"
 import { CiStar } from "react-icons/ci";
 
+/**
+ * Componente que muestra la información detallada de un libro
+ * dentro de una ventana modal.
+ *
+ * Funcionalidades:
+ * - Visualización de información completa del libro.
+ * - Cierre automático al hacer clic fuera del modal.
+ * - Gestión de libros favoritos.
+ * - Apertura del formulario de reserva.
+ */
 export default function DetailBook(props) {
 
   const menuRef = useRef(null);
+  // Controla la visualización del formulario de reserva.
   const [openReserve, setOpenReserve] = useState(false);
+  // Controla el estado visual del icono de favorito.
   const [selected, setSelected] = useState(false);
+  // Libro seleccionado recibido desde el componente padre.
   const selectedBook = props.selectedBook;
+
+  /**
+   * Efecto encargado de detectar clics fuera del modal.
+   * Si el usuario hace clic fuera del contenedor principal,
+   * se ejecuta la función de cierre recibida por props.
+   */
   useEffect(() => {
 
     function handleClickOutside(event) {
@@ -27,7 +46,7 @@ export default function DetailBook(props) {
       "mousedown",
       handleClickOutside
     );
-
+    // Limpieza del evento al desmontar el componente.
     return () => {
       document.removeEventListener(
         "mousedown",
@@ -47,8 +66,9 @@ export default function DetailBook(props) {
       >
 
         <div className="bookContent">
-
+          {/* Encabezado con imagen, título y autor */}
           <div className="bookHeader">
+            
             <img
               style={{ objectFit: "contain" }}
               src={selectedBook.imagen}
@@ -80,6 +100,7 @@ export default function DetailBook(props) {
 
         </div>
 
+        {/* Botón para agregar el libro a favoritos */}
         <span>
           <CiStar 
             className={selected ? "icon-container active" : "icon-container"}
@@ -90,6 +111,8 @@ export default function DetailBook(props) {
             }}
           />
         </span>
+
+        {/* Botón para abrir el formulario de reserva */}
         <button
           className="reserveBtn"
           onClick={() => setOpenReserve(true)}
@@ -97,6 +120,7 @@ export default function DetailBook(props) {
           RESERVAR
         </button>
 
+        {/* Renderizado condicional del formulario de reserva */}
         {openReserve && (
           <ReservationForm
             nombreLibro={selectedBook.nombre}

@@ -2,11 +2,20 @@ import {FaFacebookF,  FaWhatsapp,  FaYoutube,  FaMapMarkerAlt,} from "react-icon
 import "./Foot.css"
 import logo from "./assets/logo.ico";
 
+/**
+ * Componente reutilizable para mostrar un ícono acompañado de texto.
+ *
+ * @param {Object} props
+ * @param {JSX.Element} props.icon - Ícono a mostrar.
+ * @param {string} props.text - Texto descriptivo asociado al ícono.
+ */
 function Item({ icon, text }) {
   return (
     <div className="item">
+      {/* Contenedor del ícono */}
       <div className="icon">{icon}</div>
 
+      {/* Contenedor del texto */}
       <div className="box">
         <p>{text}</p>
       </div>
@@ -14,6 +23,11 @@ function Item({ icon, text }) {
   );
 }
 
+/**
+ * Componente Foot
+ * Representa el pie de página de la aplicación.
+ * Contiene información de ubicación, contacto y redes sociales.
+ */
 export default function Foot(props) {
   return (
     <div className="container">

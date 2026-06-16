@@ -4,11 +4,22 @@ import "./Login.css";
 import { loginUsers } from "./localStorage/LSUsers";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Componente Login
+ *
+ * Permite al usuario autenticarse mediante correo electrónico
+ * y contraseña. Dependiendo del rol obtenido tras la validación,
+ * redirige a diferentes secciones de la aplicación.
+ */
 export default function Login() {
+  // Estado para mostrar u ocultar la contraseña
   const [showPassword, setShowPassword] = useState(false);
+  // Estado para almacenar el correo ingresado
   const [correo, setCorreo] = useState("");
-const [clave, setClave] = useState("");
-const [sesion, setSesion] = useState(null);
+  // Estado para almacenar la contraseña ingresada
+  const [clave, setClave] = useState("");
+  // Estado para almacenar datos de sesión 
+  const [sesion, setSesion] = useState(null);
   const navigate = useNavigate();
 
   return (
@@ -17,6 +28,7 @@ const [sesion, setSesion] = useState(null);
         <h2>Iniciar Sesión</h2>
 
         <form className="loginForm">
+          {/* ================= CORREO ELECTRÓNICO ================= */}
           <div className="inputGroup">
             <label>Correo electrónico</label>
 
@@ -32,6 +44,7 @@ const [sesion, setSesion] = useState(null);
             </div>
           </div>
 
+          {/* ================= CONTRASEÑA ================= */}
           <div className="inputGroup">
             <label>Contraseña</label>
 
@@ -55,6 +68,7 @@ const [sesion, setSesion] = useState(null);
             </div>
           </div>
 
+          {/* ================= BOTÓN DE ACCESO ================= */}
           <button
               type="button"
               className="loginButton"
@@ -64,8 +78,10 @@ const [sesion, setSesion] = useState(null);
                   password: clave
                 };
 
+                // Validación de credenciales
                 const rol = loginUsers(sesion);
-                console.log("lofin:: "+rol)
+                
+                // Redirección según el rol del usuario
                 if (rol === "admin") {
                   navigate("/dashboard");
                 }
@@ -77,7 +93,8 @@ const [sesion, setSesion] = useState(null);
             >
               Entrar
             </button>
-
+            
+            {/* ================= ENLACE DE REGISTRO ================= */}
             <div className="loginFooter">
                 <span>¿No tienes una cuenta?</span>
                 <a href="/register" className="registerLink">

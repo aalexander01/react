@@ -2,10 +2,28 @@ import { useState, useEffect } from "react";
 import { saveReserve } from "../../localStorage/LSReserve.jsx";
 import "./ReservationForm.css";
 
+/**
+ * Componente modal para la creación de reservas de libros.
+ *
+ * Funcionalidades:
+ * - Muestra el libro seleccionado.
+ * - Establece automáticamente la fecha actual como fecha de inicio.
+ * - Permite seleccionar una fecha de entrega.
+ * - Guarda la reserva utilizando localStorage.
+ */
 export default function ReservationForm(props) {
+
+    // Estado para almacenar la fecha seleccionada por el usuario.
     const [fromDate, setFromDate] = useState("");
+    // Fecha de inicio de la reserva.
     const [fechaInicio, setFechaInicio] = useState("");
+    // Fecha de inicio de la reserva.
     const [fechaEntrega, setFechaEntrega] = useState("");
+
+  /**
+   * Al montar el componente se obtiene la fecha actual
+   * y se establece como fecha inicial por defecto.
+   */
   useEffect(() => {
     const hoy = new Date();
     const yyyy = hoy.getFullYear();
@@ -16,13 +34,6 @@ export default function ReservationForm(props) {
     setFechaInicio(fechaActual);
   }, []);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log("Reservando libro:", props.nombreLibro);
-  //   console.log("Fecha inicio:", fechaInicio);
-  //   console.log("Fecha entrega:", fechaEntrega);
-  //   // Aquí puedes agregar la lógica para enviar los datos a tu backend
-  // };
   return (
     <div className="reservationOverlay">
       <div className="reservationModal">
@@ -55,6 +66,7 @@ export default function ReservationForm(props) {
             <input  type="date" defaultValue={fechaInicio} min={fechaInicio} onChange={(e) => setFechaEntrega(e.target.value)}/>
           </div>
 
+          {/* Botón que genera y almacena la reserva */}
           <button
             type="submit"
             className="reserveButton"

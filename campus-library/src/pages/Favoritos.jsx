@@ -5,17 +5,26 @@ import DetailBook from "../components/card/DetailBook.jsx";
 import logo from "../assets/logo.png";
 import './Favoritos.css';
 
-
+/**
+ * Componente Favoritos
+ * Muestra la lista de libros guardados como favoritos por el usuario.
+ * Los datos se obtienen desde localStorage.
+ */
 export default function Favoritos(){
+
+    // Obtiene los libros favoritos almacenados localmente
     const books = getFavorite();
 
-    const [selectedBook, setSelectedBook] = useState(null);
     return(
         <>
+            {/* Título de la sección */}
             <h1>Mis Libros Favoritos</h1>
+              {/* Contenedor de la cuadrícula de libros */}
               <div className="grid">
+                {/* Se asegura que books sea un array antes de iterar */}
                 {(books || []).map((book, index) => {
         
+                  // Extracción de propiedades del libro
                   const title = book.title;
                   const author = book.author;
                   const  edicions = book.edicion;
@@ -24,15 +33,17 @@ export default function Favoritos(){
                   return (
                     <div
                       className="card"
-                      key={book.key || book.id || index}
+                      key={book.key || book.id || index} // clave única para React
                       
                     >
+                      {/* Imagen del libro */}
                       <img
                         style={{ objectFit: "contain" }}
                         src={image}
                         alt={title}
                       />
-        
+
+                      {/* Información del libro */}
                       <div className="info">
                         <p className="label">NOMBRE</p>
         
@@ -47,26 +58,6 @@ export default function Favoritos(){
                 })}
               </div>
         
-        
-              {/* PAGINACIÓN */}
-              {/* <div className="pagination">
-                <button
-                  onClick={() => { setPage((prev) => Math.max(prev - 1, 1)); subirArriba(); }}
-                  disabled={page === 1}
-                >
-                  ← Anterior
-                </button>
-        
-                <span>
-                  Página {page}
-                </span>
-        
-                <button
-                  onClick={() => {setPage((prev) => prev + 1); subirArriba();}}
-                >
-                  Siguiente →
-                </button>
-              </div> */}
         </>
     );
 }

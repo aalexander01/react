@@ -1,14 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
 
-export function DataLibrary(pagina, types, search){
-
-    if(pagina === 0){
-        getLibraryByTypeSearch(types, search);
-    }else{
-        AllDataLibrary(pagina);
-    }
-}
-
+/**
+ * Hook personalizado para obtener libros paginados desde OpenLibrary.
+ *
+ * @param {number} pagina - Número de página a consultar.
+ * @returns {Object} Estado del hook con libros y loading.
+ */
 export function AllDataLibrary(pagina) {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -29,6 +26,13 @@ export function AllDataLibrary(pagina) {
     return { books, loading };
 }
 
+/**
+ * Hook personalizado para búsqueda de libros filtrados por tipo y texto.
+ *
+ * @param {string} types - Campo de búsqueda (ej: author, title, subject).
+ * @param {string} search - Texto a buscar.
+ * @returns {Object} Estado del hook con libros agrupados, loading, error y conteo de páginas.
+ */
 export function getLibraryByTypeSearch(types, search) {
     const query = search || "";
     const type = types || "";

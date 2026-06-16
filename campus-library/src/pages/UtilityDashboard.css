@@ -141,6 +141,51 @@ button:hover {
         transform: translateX(0);
     }
 }
+
+.tableWrapper {
+  max-height: 500px; /* altura máxima */
+  overflow-y: auto; /* scroll vertical */
+  overflow-x: auto; /* scroll horizontal si es necesario */
+  border-radius: 12px;
+}
+
+
+.tableWrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.utilityTable thead th {
+  position: sticky;
+  top: 0;
+  background: #2563eb;
+  color: white;
+  z-index: 10;
+}
+
+.tableWrapper::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.tableWrapper::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 10px;
+}
+
+.tableWrapper::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+
+button.btnDelete {
+  background-color: red;
+  color: white;
+  border: none;
+}
+
+button.btnDelete:hover {
+  background-color: darkred;
+}
 th:nth-child(1), td:nth-child(1) { width: 25%; }
 
 /* th:nth-child(1), td:nth-child(6) { width: 10%; } */

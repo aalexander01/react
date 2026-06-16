@@ -1,5 +1,18 @@
 
 
+/**
+ * Guarda un libro en la lista de favoritos almacenada en localStorage.
+ *
+ * Antes de guardar, valida que el libro no exista previamente
+ * para evitar registros duplicados.
+ *
+ * @param {Object} book - Información del libro seleccionado.
+ * @param {string} book.nombre - Título del libro.
+ * @param {string} book.autor - Autor del libro.
+ * @param {string} book.imagen - URL de la portada.
+ * @param {string} book.edicion - Año o edición del libro.
+ * @param {string} book.descripcion - Descripción del libro.
+ */
 export function SaveFavorite(book){
 
   console.log("Metodo SaveFavorite:: " +book.nombre);
@@ -26,15 +39,10 @@ export function SaveFavorite(book){
 }
 
 /**
- * @typedef {Object} Reserva
- * @property {string} nombreLibro
- * @property {string} estado
- * @property {string} fechaInicio
- * @property {string} fechaFin
- */
-
-/**
- * @returns {Favoritos[]}
+ * Obtiene la lista completa de libros favoritos
+ * almacenados en localStorage.
+ *
+ * @returns {Array<Object>} Lista de favoritos.
  */
 export function getFavorite(){
   const favoritos =
@@ -44,15 +52,18 @@ export function getFavorite(){
 
 } 
 
+/**
+ * Valida si un libro ya existe en la lista de favoritos.
+ *
+ * @param {string} nombreLibro - Nombre del libro a validar.
+ * @returns {boolean}
+ * true  -> El libro no existe y puede guardarse.
+ * false -> El libro ya está registrado.
+ */
 function validateFavorite(nombreLibro){
-  let response = true;
   const favoritos = getFavorite();
 
-  favoritos.forEach(favorito => {
-    if(favorito.title === nombreLibro){
-      response = false;
-    }
-  });
-
-  return response;
+  return !favoritos.some(
+    (favorito) => favorito.title === nombreLibro
+  );
 }

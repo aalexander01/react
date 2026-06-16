@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { MdDelete } from "react-icons/md";
 import { getReserve, updateReserve } from "../localStorage/LSReserve";
 import { saveListLecture } from "../localStorage/LSListLectura";
 import "./UtilityDashboard.css";
-import { getUsers } from "../localStorage/LSUsers";
+import { deleteByUser, getUsers } from "../localStorage/LSUsers";
 
 export function Solicitudes(){
     const [order, setOrder] = useState("asc");
@@ -137,8 +138,10 @@ export function Solicitudes(){
 
 export function Usuarios(){
     const [order, setOrder] = useState("asc");
-     
-      const users = getUsers().sort((a, b) => {
+    
+      
+    const [users, setUsers] = useState(getUsers());
+    const usersSort = users.sort((a, b) => {
         const fechaA = new Date(a.fechaCreacion);
         const fechaB = new Date(b.fechaCreacion);
     
@@ -166,41 +169,41 @@ export function Usuarios(){
           {users.length === 0 ? (
             <p>Generacion de solicitudes vacio.</p>
           ) : (
-            <table className="utilityTable">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>Usuario</th>
-                  <th>Clave</th>
-                  <th>Rol</th>
-                  <th >Estado</th>
-                  <th>Fecha</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((users, index) => (
-                  <tr key={index}>
-                    <td>{users.nombre}</td>
-                    <td>{users.apellido}</td>
-                    <td>{users.user}</td>
-                    <td>{users.password}</td>
-                    <td>{users.rol}</td>
-                    <td>
-                        <select name="estado" id="estado">
-                            <option value={users.estado}>{users.estado}</option>
-                            <option value="inactivo">inactivo</option>
-                            <option value="reportado">reportado</option>
-
-                        </select>
-                    </td>
-                    <td>{users.fechaCreacion}</td>
-                    <td><button className="btnSave">actualizar</button></td>
+            <div className="tableWrapper">
+              <table className="utilityTable">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Usuario</th>
+                    <th>Clave</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th></th>
+                    <th></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {usersSort.map((user, index) => (
+                    <tr key={index}>
+                      <td>{user.nombre}</td>
+                      <td>{user.apellido}</td>
+                      <td>{user.user}</td>
+                      <td>{user.password}</td>
+                      <td>{user.rol}</td>
+                      <td>
+                        {user.estado}
+                      </td>
+                      <td>{user.fechaCreacion}</td>
+                      <td>
+                        <MdDelete size={32} className="btnDelete" onClick={() => setUsers(deleteByUser(user.user))}/>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
           </>

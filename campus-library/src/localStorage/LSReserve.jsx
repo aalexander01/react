@@ -1,5 +1,13 @@
-
-
+/**
+ * Crea y guarda una nueva reserva en localStorage.
+ * La reserva se inicializa con estado "reservado".
+ *
+ * @param {Object} props - Datos de la reserva.
+ * @param {string} props.nombreLibro - Nombre del libro a reservar.
+ * @param {string} props.fechaInicio - Fecha de inicio de la reserva.
+ * @param {string} [props.fechaEntrega] - Fecha de entrega (opcional).
+ * @param {Function} props.onClose - Función para cerrar el modal.
+ */
 export function saveReserve(props) {
     const nuevaReserva = {
       nombreLibro: props.nombreLibro,
@@ -21,16 +29,21 @@ export function saveReserve(props) {
     props.onClose;
   }
 
+
 /**
+ * Representa una reserva almacenada en el sistema.
+ *
  * @typedef {Object} Reserva
- * @property {string} nombreLibro
- * @property {string} estado
- * @property {string} fechaInicio
- * @property {string} fechaFin
+ * @property {string} nombreLibro - Nombre del libro reservado.
+ * @property {string} estado - Estado actual de la reserva.
+ * @property {string} fechaInicio - Fecha en que inicia la reserva.
+ * @property {string} fechaFin - Fecha de entrega o finalización.
  */
 
 /**
- * @returns {Reserva[]}
+ * Obtiene todas las reservas almacenadas en localStorage.
+ *
+ * @returns {Reserva[]} Lista de reservas o arreglo vacío si no existen registros.
  */
 export function getReserve(){
   const reserve =
@@ -40,6 +53,14 @@ export function getReserve(){
 
 } 
 
+/**
+ * Actualiza el estado de una reserva existente.
+ *
+ * @param {Object} solicitud - Datos de actualización.
+ * @param {string} solicitud.nombre - Nombre del libro a actualizar.
+ * @param {string} solicitud.estado - Nuevo estado a asignar.
+ * @returns {boolean} true si la reserva fue encontrada y actualizada.
+ */
 export function updateReserve(solicitud = {}) {
 
     const nombre = solicitud.nombre || "";
@@ -64,20 +85,4 @@ export function updateReserve(solicitud = {}) {
     );
 
     return response;
-}
-
-function validationUser(usuario, password) {
-  const reservas = getReserve();
-
-  const userFound = users.find(
-    user =>
-      user.user === usuario &&
-      user.password === password
-  );
-
-  if (!userFound) {
-    return null;
-  }
-
-  return userFound.rol;
 }

@@ -10,15 +10,29 @@ import { useNavigate } from "react-router-dom";
 import "./Register.css";
 import { saveUsers } from "./localStorage/LSUsers";
 
+/**
+ * Componente Register
+ * Permite registrar nuevos usuarios y almacenarlos en localStorage.
+ */
 export default function Register() {
+  // Controla si la contraseña se muestra u oculta
   const [showPassword, setShowPassword] = useState(false);
+  // Estados para almacenar los datos ingresados en el formulario
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
+  // Estado que almacena temporalmente el usuario a registrar
   const [user, setUser] = useState("");
+  // Hook para realizar navegación entre rutas
   const navigate = useNavigate();
+  // Estado que almacena el resultado del registro
   const [response, setResponse] = useState(false);
+
+  /**
+   * Cuando el estado "user" cambia,
+   * se intenta guardar el usuario en localStorage.
+   */
   useEffect(() => {
     if (user) {
       const ok = saveUsers(user);
@@ -27,6 +41,10 @@ export default function Register() {
     }
   }, [user]);
 
+  /**
+   * Si el registro fue exitoso,
+   * redirige al usuario a la página principal.
+   */
   useEffect(() => {
     console.log(response)
                if(response){
@@ -36,10 +54,11 @@ export default function Register() {
 
   return (
     <div className="registerContainer">
-      
+      {/* Tarjeta principal del formulario */}
       <div className="registerCard">
         <form className="registerForm">
 
+          {/* Campo Nombre */}
           <div className="inputGroup">
             <label>Nombre</label>
 
@@ -56,6 +75,7 @@ export default function Register() {
             </div>
           </div>
 
+          {/* Campo Apellido */}
           <div className="inputGroup">
             <label>Apellido</label>
 
@@ -72,6 +92,7 @@ export default function Register() {
             </div>
           </div>
 
+          {/* Campo Correo Electrónico */}
           <div className="inputGroup">
             <label>Correo electrónico</label>
 
@@ -89,6 +110,7 @@ export default function Register() {
             </div>
           </div>
 
+          {/* Campo Contraseña */}
           <div className="inputGroup">
             <label>Contraseña</label>
 
@@ -113,25 +135,26 @@ export default function Register() {
             </div>
           </div>
 
+          {/* Botón para mostrar u ocultar la contraseña */}
           <button
             type="button"
             className="registerButton"
             onClick={() => {
+              // Construcción del objeto usuario
               setUser({
                 nombre: nombre,
                 apellido: apellido,
                 correo: correo,
                 clave: password
               });
-              console.log(nombre)
-               console.log("HTML:: "+user);
                
             }}
             
           >
             Registrar
           </button>
-
+          
+          {/* Enlace para usuarios que ya poseen cuenta */}
           <div className="registerFooter">
             <span>¿Ya tienes una cuenta?</span>
 
